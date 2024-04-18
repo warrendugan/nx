@@ -32,8 +32,8 @@ export function ProjectDetailsWrapperComponent({
   sourceMap,
   setExpandTargets,
   expandTargets,
-  selectedTargetGroup,
-  selectTargetGroup,
+  getSelectedTarget,
+  selectTarget,
   clearTargetGroup,
   collapseAllTargets,
 }: ProjectDetailsProps) {
@@ -116,17 +116,15 @@ export function ProjectDetailsWrapperComponent({
     }
   };
 
-  useEffect(() => {
+  /* useEffect(() => {
     if (!project.data.targets) return;
 
-    const selectedTargetGroupParams = searchParams.get('targetGroup');
+    const selectedTargetNameParam = searchParams.get('targetName');
     if (
-      selectedTargetGroupParams &&
-      selectedTargetGroup !== selectedTargetGroupParams
+      selectedTargetNameParam &&
+      selectedTarget !== selectedTargetNameParam
     ) {
-      selectTargetGroup(selectedTargetGroupParams);
-    } else if (!selectedTargetGroupParams) {
-      selectTargetGroup(defaultSelectTargetGroup(project)); // set first target group as default
+      selectTarget(selectedTargetNameParam);
     }
 
     const expandedTargetsParams =
@@ -138,7 +136,7 @@ export function ProjectDetailsWrapperComponent({
     const targetName = searchParams.get('targetName');
     if (targetName) {
       const targetGroup = getTargetGroupForTarget(targetName, project);
-      selectTargetGroup(targetGroup);
+      selectTarget(targetGroup);
       setExpandTargets([targetName]);
     }
 
@@ -150,6 +148,7 @@ export function ProjectDetailsWrapperComponent({
       setSearchParams(searchParams, { replace: true });
     };
   }, []); // only run on mount
+  
 
   useEffect(() => {
     if (!project.data.targets) return;
@@ -184,6 +183,7 @@ export function ProjectDetailsWrapperComponent({
     searchParams,
     setSearchParams,
   ]);
+  */
 
   return (
     <ProjectDetails
