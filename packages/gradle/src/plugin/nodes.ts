@@ -42,7 +42,7 @@ export const calculatedTargets: Record<
   {
     name: string;
     targets: Record<string, TargetConfiguration>;
-    targetGroups: Record<string, string[]>;
+    metadata: ProjectConfiguration['metadata'];
   }
 > = {};
 
@@ -51,7 +51,7 @@ function readTargetsCache(): Record<
   {
     name: string;
     targets: Record<string, TargetConfiguration>;
-    targetGroups: Record<string, string[]>;
+    metadata: ProjectConfiguration['metadata'];
   }
 > {
   return readJsonFile(cachePath);
@@ -63,7 +63,7 @@ export function writeTargetsToCache(
     {
       name: string;
       targets: Record<string, TargetConfiguration>;
-      targetGroups: Record<string, string[]>;
+      metadata: ProjectConfiguration['metadata'];
     }
   >
 ) {
@@ -88,12 +88,7 @@ export const createNodes: CreateNodes<GradlePluginOptions> = [
       calculatedTargets[hash] = targetsCache[hash];
       return {
         projects: {
-          [projectRoot]: {
-            ...targetsCache[hash],
-            metadata: {
-              technologies: ['gradle'],
-            },
-          },
+          [projectRoot]: targetsCache[hash],
         },
       };
     }
@@ -140,7 +135,10 @@ export const createNodes: CreateNodes<GradlePluginOptions> = [
       calculatedTargets[hash] = {
         name: projectName,
         targets,
-        targetGroups,
+        metadata: {
+          targetGroups,
+          technologies: ['gradle'],
+        },
       };
 
       const project: Omit<ProjectConfiguration, 'root'> = {

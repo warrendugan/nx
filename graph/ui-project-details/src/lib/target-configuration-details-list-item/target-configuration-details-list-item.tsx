@@ -45,6 +45,9 @@ export const TargetConfigurationDetailsListItem = forwardRef(
           onRunTarget={onRunTarget}
           onViewInTaskGraph={onViewInTaskGraph}
           collapsable={collapsable}
+          technologies={
+            target.metadata?.technologies ?? project.data.metadata?.technologies
+          }
         />
       </li>
     );

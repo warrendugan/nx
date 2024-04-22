@@ -8,11 +8,7 @@ import {
   useEnvironmentConfig,
   useRouteConstructor,
 } from '@nx/graph/shared';
-import {
-  ProjectDetails,
-  defaultSelectTargetGroup,
-  getTargetGroupForTarget,
-} from '@nx/graph/ui-project-details';
+import { ProjectDetails } from '@nx/graph/ui-project-details';
 import { useCallback, useEffect } from 'react';
 import {
   mapStateToProps,
@@ -32,9 +28,6 @@ export function ProjectDetailsWrapperComponent({
   sourceMap,
   setExpandTargets,
   expandTargets,
-  getSelectedTarget,
-  selectTarget,
-  clearTargetGroup,
   collapseAllTargets,
 }: ProjectDetailsProps) {
   const environment = useEnvironmentConfig()?.environment;
@@ -101,14 +94,8 @@ export function ProjectDetailsWrapperComponent({
 
   const updateSearchParams = (
     params: URLSearchParams,
-    targetGroup: string | null,
     targetNames: string[]
   ) => {
-    if (targetGroup) {
-      params.set('targetGroup', targetGroup);
-    } else {
-      params.delete('targetGroup');
-    }
     if (targetNames.length === 0) {
       params.delete('targetName');
     } else {
@@ -116,74 +103,45 @@ export function ProjectDetailsWrapperComponent({
     }
   };
 
-  /* useEffect(() => {
+  useEffect(() => {
     if (!project.data.targets) return;
 
-    const selectedTargetNameParam = searchParams.get('targetName');
-    if (
-      selectedTargetNameParam &&
-      selectedTarget !== selectedTargetNameParam
-    ) {
-      selectTarget(selectedTargetNameParam);
-    }
-
-    const expandedTargetsParams =
-      searchParams.get('targetName')?.split(',') || [];
-    if (expandedTargetsParams.length > 0) {
+    const expandedTargetsParams = searchParams.get('targetName')?.split(',');
+    if (expandedTargetsParams && expandedTargetsParams.length > 0) {
       setExpandTargets(expandedTargetsParams);
     }
 
-    const targetName = searchParams.get('targetName');
-    if (targetName) {
-      const targetGroup = getTargetGroupForTarget(targetName, project);
-      selectTarget(targetGroup);
-      setExpandTargets([targetName]);
-    }
-
     return () => {
-      clearTargetGroup();
       collapseAllTargets();
-      searchParams.delete('targetGroup');
       searchParams.delete('targetName');
       setSearchParams(searchParams, { replace: true });
     };
   }, []); // only run on mount
-  
 
   useEffect(() => {
     if (!project.data.targets) return;
 
-    const selectedTargetGroupParams = searchParams.get('targetGroup');
     const expandedTargetsParams =
       searchParams.get('targetName')?.split(',') || [];
 
-    if (
-      selectedTargetGroup === selectedTargetGroupParams &&
-      expandedTargetsParams.join(',') === expandTargets.join(',')
-    ) {
+    if (expandedTargetsParams.join(',') === expandTargets.join(',')) {
       return;
     }
 
     setSearchParams(
       (currentSearchParams) => {
-        updateSearchParams(
-          currentSearchParams,
-          selectedTargetGroup,
-          expandTargets
-        );
+        updateSearchParams(currentSearchParams, expandTargets);
         return currentSearchParams;
       },
       { replace: true, preventScrollReset: true }
     );
   }, [
     expandTargets,
-    selectedTargetGroup,
     project.data.targets,
     setExpandTargets,
     searchParams,
     setSearchParams,
   ]);
-  */
 
   return (
     <ProjectDetails
