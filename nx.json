@@ -70,7 +70,10 @@
     },
     "build-native": {
       "inputs": ["native"],
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["rust"]
+      }
     },
     "build-base": {
       "dependsOn": ["^build-base", "build-native"],
@@ -82,13 +85,19 @@
         "main": "{projectRoot}/index.ts"
       },
       "outputs": ["{options.outputPath}"],
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["typescript"]
+      }
     },
     "test-native": {
       "inputs": ["native"],
       "executor": "@monodon/rust:test",
       "options": {},
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["rust"]
+      }
     },
     "test": {
       "dependsOn": ["test-native", "build-native", "^build-native"],
@@ -126,7 +135,10 @@
         "runInBand": true
       },
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["cypress"]
+      }
     },
     "e2e-macos": {
       "inputs": [
@@ -151,7 +163,10 @@
         "runInBand": true
       },
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["cypress"]
+      }
     },
     "e2e-base": {
       "inputs": ["default", "^production"]
@@ -164,7 +179,10 @@
         "{projectRoot}/.storybook/**/*",
         "{projectRoot}/tsconfig.storybook.json"
       ],
-      "cache": true
+      "cache": true,
+      "metadata": {
+        "technologies": ["storybook"]
+      }
     },
     "build-ng": {
       "cache": true
