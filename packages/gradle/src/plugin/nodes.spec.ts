@@ -82,7 +82,7 @@ describe('@nx/gradle/plugin', () => {
         "targets": {
           "test": {
             "cache": false,
-            "command": "../gradlew test",
+            "command": "./gradlew proj:test",
             "dependsOn": [
               "classes",
             ],
@@ -96,7 +96,7 @@ describe('@nx/gradle/plugin', () => {
               ],
             },
             "options": {
-              "cwd": "proj",
+              "cwd": "{workspaceRoot}",
             },
             "outputs": undefined,
           },
@@ -147,7 +147,7 @@ describe('@nx/gradle/plugin', () => {
         "targets": {
           "test": {
             "cache": false,
-            "command": "../../../gradlew test",
+            "command": "./gradlew proj:test",
             "dependsOn": [
               "classes",
             ],
@@ -161,7 +161,7 @@ describe('@nx/gradle/plugin', () => {
               ],
             },
             "options": {
-              "cwd": "nested/nested/proj",
+              "cwd": "{workspaceRoot}",
             },
             "outputs": undefined,
           },
