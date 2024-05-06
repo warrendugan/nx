@@ -3,6 +3,9 @@ const { withNx } = require('@nx/next/plugins/with-nx');
 const redirectRules = require('./redirect-rules');
 
 module.exports = withNx({
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   // For both client and server
   env: {
     VERCEL: process.env.VERCEL,

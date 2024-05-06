@@ -1,4 +1,4 @@
-import { blogApi } from '../../../lib/blog.api';
+import { blogApi } from '../../lib/blog.api';
 import { BlogContainer } from '@nx/nx-dev/ui-blog';
 
 async function getBlogs() {
