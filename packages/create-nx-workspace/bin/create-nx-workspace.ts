@@ -10,7 +10,7 @@ import { nxVersion } from '../src/utils/nx/nx-version';
 import { pointToTutorialAndCourse } from '../src/utils/preset/point-to-tutorial-and-course';
 
 import { yargsDecorator } from './decorator';
-import { getThirdPartyPreset } from '../src/utils/preset/get-third-party-preset';
+import { getPackageNameFromThirdPartyPreset } from '../src/utils/preset/get-third-party-preset';
 import {
   determineDefaultBase,
   determineNxCloud,
@@ -256,29 +256,22 @@ async function normalizeArgsMiddleware(
   });
 
   try {
-    let thirdPartyPreset: string | null;
-
-    try {
-      thirdPartyPreset = await getThirdPartyPreset(argv.preset);
-    } catch (e) {
-      output.error({
-        title: `Could not find preset "${argv.preset}"`,
-      });
-      process.exit(1);
-    }
-
     argv.name = await determineFolder(argv);
-
-    if (thirdPartyPreset) {
-      Object.assign(argv, {
-        preset: thirdPartyPreset,
-        appName: '',
-        style: '',
-      });
-    } else {
+    if (isKnownPreset(argv.preset)) {
       argv.stack = await determineStack(argv);
       const presetOptions = await determinePresetOptions(argv);
       Object.assign(argv, presetOptions);
+    } else {
+      let thirdPartyPackageName: string | undefined;
+      try {
+        thirdPartyPackageName = getPackageNameFromThirdPartyPreset(argv.preset);
+      } catch (e) {
+        //! Error here
+        output.error({
+          title: `Invalid preset npm package ${argv.preset}`,
+        });
+        process.exit(1);
+      }
     }
 
     const packageManager = await determinePackageManager(argv);
