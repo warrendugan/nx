@@ -302,7 +302,7 @@ const handleWorkspaceChanges: FileWatcherCallback = async (
       let error = typeof err === 'string' ? new Error(err) : err;
       serverLogger.watcherLog(
         'Unexpected workspace watcher error',
-        error.message
+        error?.message
       );
       console.error(error);
       workspaceWatcherError = error;

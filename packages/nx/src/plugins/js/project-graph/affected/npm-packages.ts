@@ -13,12 +13,15 @@ import {
   ProjectGraphExternalNode,
   ProjectGraphProjectNode,
 } from '../../../../config/project-graph';
+import { NxJsonConfiguration } from '../../../../config/nx-json';
 
 export const getTouchedNpmPackages: TouchedProjectLocator<
   WholeFileChange | JsonChange
 > = (touchedFiles, _, nxJson, packageJson, projectGraph): string[] => {
   const packageJsonChange = touchedFiles.find((f) => f.file === 'package.json');
   if (!packageJsonChange) return [];
+
+  const globalPackages = new Set(getGlobalPackages(nxJson.plugins));
 
   let touched = [];
   const changes = packageJsonChange.getChanges();
@@ -59,6 +62,12 @@ export const getTouchedNpmPackages: TouchedProjectLocator<
             touched.push(implementationNpmPackage.name);
           }
         }
+
+        if ('packageName' in npmPackage.data) {
+          if (globalPackages.has(npmPackage.data.packageName)) {
+            touched.push(...Object.keys(projectGraph.nodes));
+          }
+        }
       }
     } else if (isWholeFileChange(c)) {
       // Whole file was touched, so all npm packages are touched.
@@ -76,3 +85,21 @@ export const getTouchedNpmPackages: TouchedProjectLocator<
   }
   return touched;
 };
+
+function getGlobalPackages(plugins: NxJsonConfiguration['plugins']) {
+  return (plugins ?? [])
+    .map((p) => getPackageName(typeof p === 'string' ? p : p.plugin))
+    .concat('nx');
+}
+
+//# Converts import paths to package names.
+//# e.g. - `@nx/workspace`        -> `@nx/workspace`
+//#      - `@nx/workspace/plugin` -> `@nx/workspace`
+//#      - `@nx/workspace/other`  -> `@nx/workspace`
+//#      - `nx/plugin`            -> `nx`
+export function getPackageName(name: string) {
+  if (name.startsWith('@')) {
+    return name.split('/').slice(0, 2).join('/');
+  }
+  return name.split('/')[0];
+}
