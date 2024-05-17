@@ -193,6 +193,15 @@
           "alwaysAddToPackageJson": false
         }
       }
+    },
+    "19.0.5": {
+      "version": "19.0.5-beta.0",
+      "packages": {
+        "postcss": {
+          "version": "8.4.38",
+          "alwaysAddToPackageJson": false
+        }
+      }
     }
   }
 }
