@@ -4,7 +4,6 @@ import {
   GeneratorCallback,
   joinPathFragments,
   logger,
-  ProjectConfiguration,
   readNxJson,
   readProjectConfiguration,
   runTasksInSerial,
@@ -15,7 +14,6 @@ import {
 import { SetUpDockerOptions } from './schema';
 import { join } from 'path';
 import { interpolate } from 'nx/src/tasks-runner/utils';
-import { readCachedProjectConfiguration } from 'nx/src/project-graph/project-graph';
 
 function normalizeOptions(
   tree: Tree,
@@ -30,15 +28,16 @@ function normalizeOptions(
 }
 
 function addDocker(tree: Tree, options: SetUpDockerOptions) {
-  // Inferred targets are only available in the project graph
-  const projectConfig = readCachedProjectConfiguration(options.project);
+  const projectConfig = readProjectConfiguration(tree, options.project);
 
   if (
     !projectConfig ||
     !projectConfig.targets ||
     !projectConfig.targets[options.buildTarget]
   ) {
-    return;
+    throw new Error(
+      `Could not find the project ${options.project} or the build target ${options.buildTarget} in the workspace.`
+    );
   }
 
   // Returns an string like {workspaceRoot}/dist/apps/{projectName}
