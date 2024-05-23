@@ -20,6 +20,11 @@
       "factory": "./src/generators/vitest/vitest-generator#vitestGeneratorInternal",
       "schema": "./src/generators/vitest/schema.json",
       "description": "Generate a vitest configuration"
+    },
+    "convert-to-inferred": {
+      "factory": "./src/generators/convert-to-inferred/convert-to-inferred",
+      "schema": "./src/generators/convert-to-inferred/schema.json",
+      "description": "Convert existing Vite project(s) using `@nx/vite:*` executors to use `@nx/vite/plugin`."
     }
   }
 }
