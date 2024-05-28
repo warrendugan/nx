@@ -84,6 +84,8 @@ export default function TargetConfigurationDetails({
       ? Object.keys(configurations).length
       : true);
 
+  const targetSourceInfo = selectSourceInfo(sourceMap, `targets.${targetName}`);
+
   return (
     <div className="relative overflow-hidden rounded-md border border-slate-200 dark:border-slate-700/60">
       <TargetConfigurationDetailsHeader
@@ -109,7 +111,16 @@ export default function TargetConfigurationDetails({
               />
             </h4>
             <p className="pl-5 font-mono">
-              <TargetExecutor {...displayHeader} link={link} />
+              <TargetExecutor {...displayHeader} link={link}>
+                {targetSourceInfo && (
+                  <span className="pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
+                    <SourceInfo
+                      data={targetSourceInfo}
+                      propertyKey={`targets.${targetName}`}
+                    />
+                  </span>
+                )}
+              </TargetExecutor>
             </p>
           </div>
 
@@ -122,7 +133,16 @@ export default function TargetConfigurationDetails({
                 />
               </h4>
               <p className="pl-5 font-mono">
-                <TargetExecutor script={script} link={link} />
+                <TargetExecutor script={script} link={link}>
+                  {targetSourceInfo && (
+                    <span className="pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
+                      <SourceInfo
+                        data={targetSourceInfo}
+                        propertyKey={`targets.${targetName}`}
+                      />
+                    </span>
+                  )}
+                </TargetExecutor>
               </p>
             </div>
           )}
@@ -163,7 +183,7 @@ export default function TargetConfigurationDetails({
                     >
                       <TargetConfigurationProperty data={input}>
                         {sourceInfo && (
-                          <span className="inline flex min-w-0 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
+                          <span className="min-w-0 flex-1 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
                             <SourceInfo
                               data={sourceInfo}
                               propertyKey={`targets.${targetName}.inputs`}
@@ -213,7 +233,7 @@ export default function TargetConfigurationDetails({
                     >
                       <TargetConfigurationProperty data={output}>
                         {sourceInfo && (
-                          <span className="inline flex min-w-0 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
+                          <span className="min-w-0 flex-1 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
                             <SourceInfo
                               data={sourceInfo}
                               propertyKey={`targets.${targetName}.outputs`}
@@ -263,7 +283,7 @@ export default function TargetConfigurationDetails({
                       key={`dependsOn-${idx}`}
                     >
                       <TargetConfigurationProperty data={dep}>
-                        <span className="inline flex min-w-0 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
+                        <span className="min-w-0 flex-1 pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
                           {sourceInfo && (
                             <SourceInfo
                               data={sourceInfo}
