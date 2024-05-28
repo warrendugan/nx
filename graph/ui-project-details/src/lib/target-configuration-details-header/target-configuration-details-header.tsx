@@ -77,7 +77,16 @@ export const TargetConfigurationDetailsHeader = ({
             ) : (
               <ChevronUpIcon className="h-3 w-3" />
             ))}
-          <h3 className="font-medium dark:text-slate-300">{targetName}</h3>
+          <h3
+            className={twMerge(
+              'font-medium dark:text-slate-300',
+              !isCollasped || targetName === 'nx-release-publish'
+                ? 'flex-1'
+                : ''
+            )}
+          >
+            {targetName}
+          </h3>
           <TargetTechnologies
             technologies={targetConfiguration.metadata?.technologies}
             showTooltip={!isCollasped}
