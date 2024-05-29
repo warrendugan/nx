@@ -25,6 +25,7 @@ exports[`@nx/vite/plugin not root project should create nodes 1`] = `
             "cwd": "my-app",
           },
           "outputs": [
+            "{projectRoot}/{options.outDir}",
             "{workspaceRoot}/dist/{projectRoot}",
           ],
         },
@@ -78,6 +79,7 @@ exports[`@nx/vite/plugin root project should create nodes 1`] = `
             "cwd": ".",
           },
           "outputs": [
+            "{projectRoot}/{options.outDir}",
             "{projectRoot}/dist",
           ],
         },

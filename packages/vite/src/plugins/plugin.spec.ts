@@ -27,7 +27,7 @@ describe('@nx/vite/plugin', () => {
   let createNodesFunction = createNodes[1];
   let context: CreateNodesContext;
   describe('root project', () => {
-    let tempFs;
+    let tempFs: TempFs;
     beforeEach(async () => {
       tempFs = new TempFs('vite-plugin-tests');
       context = {
@@ -44,9 +44,11 @@ describe('@nx/vite/plugin', () => {
             production: ['!{projectRoot}/**/*.spec.ts'],
           },
         },
-        workspaceRoot: '',
+        workspaceRoot: tempFs.tempDir,
       };
+      tempFs.createFileSync('vite.config.ts', '');
       tempFs.createFileSync('index.html', '');
+      tempFs.createFileSync('project.json', '');
     });
 
     afterEach(() => {
@@ -71,7 +73,7 @@ describe('@nx/vite/plugin', () => {
   });
 
   describe('not root project', () => {
-    let tempFs;
+    let tempFs: TempFs;
     beforeEach(() => {
       tempFs = new TempFs('test');
       context = {

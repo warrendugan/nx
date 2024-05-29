@@ -118,7 +118,8 @@ async function buildViteTargets(
 
   const { buildOutputs, testOutputs, hasTest, isBuildable } = getOutputs(
     viteConfig,
-    projectRoot
+    projectRoot,
+    context
   );
 
   const namedInputs = getNamedInputs(projectRoot, context);
@@ -244,7 +245,8 @@ function serveStaticTarget(options: VitePluginOptions) {
 
 function getOutputs(
   viteConfig: Record<string, any> | undefined,
-  projectRoot: string
+  projectRoot: string,
+  context: CreateNodesContext
 ): {
   buildOutputs: string[];
   testOutputs: string[];
@@ -262,7 +264,7 @@ function getOutputs(
   const isBuildable =
     build?.lib ||
     build?.rollupOptions?.inputs ||
-    existsSync(join(workspaceRoot, projectRoot, 'index.html'));
+    existsSync(join(context.workspaceRoot, projectRoot, 'index.html'));
 
   const reportsDirectoryPath = normalizeOutputPath(
     test?.coverage?.reportsDirectory,
@@ -271,8 +273,11 @@ function getOutputs(
   );
 
   return {
-    buildOutputs: [buildOutputPath],
-    testOutputs: [reportsDirectoryPath],
+    buildOutputs: ['{projectRoot}/{options.outDir}', buildOutputPath],
+    testOutputs: [
+      '{projectRoot}/{options.coverage.reportsDirectory}',
+      reportsDirectoryPath,
+    ],
     hasTest: !!test,
     isBuildable,
   };

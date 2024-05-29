@@ -25,6 +25,7 @@ exports[`@nx/vite/plugin with test node root project should create nodes - with 
             "cwd": ".",
           },
           "outputs": [
+            "{projectRoot}/{options.coverage.reportsDirectory}",
             "{projectRoot}/coverage",
           ],
         },
