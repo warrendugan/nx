@@ -1,0 +1,29 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Rollup - Convert Executors To Plugin --project should setup a new Rollup plugin and only migrate one specific project 1`] = `
+"const { withNx } = require('@nx/rollup/with-nx');
+
+// These options were migrated by @nx/rollup:convert-to-inferred from project.json.
+const options = {
+"format": [
+"esm"
+],
+"outputPath": "{workspaceRoot}/dist/mypkg",
+"main": "mypkg/src/index.ts",
+"tsConfig": "mypkg/tsconfig.lib.json",
+"compiler": "babel",
+"external": [],
+"assets": []
+};
+
+const config = withNx(options, {
+// Provide additional rollup configuration here. See: https://rollupjs.org/configuration-options
+// e.g.
+// output: { sourcemap: true },
+});
+
+config = require('undefined')(config, options);
+}
+
+module.exports = config;"
+`;

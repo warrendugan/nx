@@ -24,6 +24,9 @@ export function getDevServerOptions(
     scriptsOptimization = stylesOptimization = false;
   }
 
+  devServer: {
+
+  }
   const config: WebpackDevServerConfiguration = {
     host: serveOptions.host,
     port: serveOptions.port,
