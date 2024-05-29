@@ -13,10 +13,12 @@ describe('nx package.json workspaces plugin', () => {
         }),
         'packages/lib-a/package.json': JSON.stringify({
           name: 'lib-a',
+          description: 'lib-a description',
           scripts: { test: 'jest' },
         }),
         'packages/lib-b/package.json': JSON.stringify({
           name: 'lib-b',
+          description: 'lib-b description',
           scripts: {
             build: 'tsc',
             test: 'jest',
@@ -41,6 +43,7 @@ describe('nx package.json workspaces plugin', () => {
       {
         "projects": {
           ".": {
+            "description": undefined,
             "metadata": {
               "targetGroups": {
                 "NPM Scripts": [
@@ -52,6 +55,9 @@ describe('nx package.json workspaces plugin', () => {
             "projectType": "library",
             "root": ".",
             "sourceRoot": ".",
+            "tags": [
+              "npm:public",
+            ],
             "targets": {
               "echo": {
                 "executor": "nx:run-script",
@@ -80,6 +86,7 @@ describe('nx package.json workspaces plugin', () => {
       {
         "projects": {
           "packages/lib-a": {
+            "description": "lib-a description",
             "metadata": {
               "targetGroups": {
                 "NPM Scripts": [
@@ -91,6 +98,9 @@ describe('nx package.json workspaces plugin', () => {
             "projectType": "library",
             "root": "packages/lib-a",
             "sourceRoot": "packages/lib-a",
+            "tags": [
+              "npm:public",
+            ],
             "targets": {
               "nx-release-publish": {
                 "dependsOn": [
@@ -119,6 +129,7 @@ describe('nx package.json workspaces plugin', () => {
       {
         "projects": {
           "packages/lib-b": {
+            "description": "lib-b description",
             "implicitDependencies": [
               "lib-a",
             ],
@@ -138,6 +149,9 @@ describe('nx package.json workspaces plugin', () => {
             "projectType": "library",
             "root": "packages/lib-b",
             "sourceRoot": "packages/lib-b",
+            "tags": [
+              "npm:public",
+            ],
             "targets": {
               "build": {
                 "executor": "nx:run-script",

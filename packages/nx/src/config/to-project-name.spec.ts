@@ -26,9 +26,11 @@ describe('Workspaces', () => {
       await fs.createFiles({
         'packages/my-package/package.json': JSON.stringify({
           name: 'my-package',
+          description: 'my-package description',
         }),
         'package.json': JSON.stringify({
           name: 'package-name',
+          description: 'package description',
           workspaces: ['packages/**'],
         }),
       });
@@ -53,6 +55,7 @@ describe('Workspaces', () => {
       );
       expect(projects['packages/my-package']).toMatchInlineSnapshot(`
         {
+          "description": "my-package description",
           "metadata": {
             "targetGroups": {
               "NPM Scripts": [],
@@ -62,6 +65,9 @@ describe('Workspaces', () => {
           "projectType": "library",
           "root": "packages/my-package",
           "sourceRoot": "packages/my-package",
+          "tags": [
+            "npm:public",
+          ],
           "targets": {
             "nx-release-publish": {
               "configurations": {},

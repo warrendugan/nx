@@ -116,6 +116,11 @@ export interface ProjectConfiguration {
    * Metadata about the project
    */
   metadata?: ProjectMetadata;
+
+  /**
+   * Project's description
+   */
+  description?: string;
 }
 
 export interface ProjectMetadata {

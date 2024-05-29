@@ -12,6 +12,7 @@ import { output } from '../../utils/output';
 import {
   PackageJson,
   getMetadataFromPackageJson,
+  getTagsFromPackageJson,
   readTargetsFromPackageJson,
 } from '../../utils/package-json';
 import { joinPathFragments } from '../../utils/path';
@@ -101,7 +102,9 @@ export function buildProjectConfigurationFromPackageJson(
     name,
     projectType,
     ...packageJson.nx,
+    description: packageJson.description,
     targets: readTargetsFromPackageJson(packageJson),
+    tags: getTagsFromPackageJson(packageJson),
     metadata: getMetadataFromPackageJson(packageJson),
   };
 }

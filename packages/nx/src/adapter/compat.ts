@@ -137,7 +137,10 @@ function mockReadJsonWorkspace(
         ...options,
         allowedProjectExtensions: allowedProjectExtensions as CheckHasKeys<
           typeof allowedProjectExtensions,
-          keyof Omit<ProjectConfiguration, 'targets' | 'generators'>
+          keyof Omit<
+            ProjectConfiguration,
+            'targets' | 'generators' | 'description'
+          >
         >,
         allowedWorkspaceExtensions: allowedWorkspaceExtensions as CheckHasKeys<
           typeof allowedWorkspaceExtensions,

@@ -103,9 +103,7 @@ export interface ProjectGraphProjectNode {
   /**
    * Additional metadata about a project
    */
-  data: ProjectConfiguration & {
-    description?: string;
-  };
+  data: ProjectConfiguration;
 }
 
 /**

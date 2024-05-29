@@ -23,6 +23,7 @@ describe('nx project.json plugin', () => {
       {
         'packages/lib-a/project.json': JSON.stringify({
           name: 'lib-a',
+          description: 'lib-a project description',
           targets: {
             build: {
               executor: 'nx:run-commands',
@@ -32,6 +33,7 @@ describe('nx project.json plugin', () => {
         }),
         'packages/lib-a/package.json': JSON.stringify({
           name: 'lib-a',
+          description: 'lib-a package description',
           scripts: {
             test: 'jest',
           },
@@ -46,6 +48,7 @@ describe('nx project.json plugin', () => {
       {
         "projects": {
           "lib-a": {
+            "description": "lib-a package description",
             "metadata": {
               "targetGroups": {
                 "NPM Scripts": [
@@ -55,6 +58,9 @@ describe('nx project.json plugin', () => {
             },
             "name": "lib-a",
             "root": "packages/lib-a",
+            "tags": [
+              "npm:public",
+            ],
             "targets": {
               "nx-release-publish": {
                 "dependsOn": [

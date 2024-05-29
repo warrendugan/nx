@@ -6,7 +6,7 @@ A node describing a project in a workspace
 
 ### Properties
 
-- [data](../../devkit/documents/ProjectGraphProjectNode#data): ProjectConfiguration & Object
+- [data](../../devkit/documents/ProjectGraphProjectNode#data): ProjectConfiguration
 - [name](../../devkit/documents/ProjectGraphProjectNode#name): string
 - [type](../../devkit/documents/ProjectGraphProjectNode#type): "app" | "e2e" | "lib"
 
@@ -14,7 +14,7 @@ A node describing a project in a workspace
 
 ### data
 
-• **data**: [`ProjectConfiguration`](../../devkit/documents/ProjectConfiguration) & \{ `description?`: `string` }
+• **data**: [`ProjectConfiguration`](../../devkit/documents/ProjectConfiguration)
 
 Additional metadata about a project
 

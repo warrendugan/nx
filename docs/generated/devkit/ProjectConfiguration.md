@@ -6,6 +6,7 @@ Project configuration
 
 ### Properties
 
+- [description](../../devkit/documents/ProjectConfiguration#description): string
 - [generators](../../devkit/documents/ProjectConfiguration#generators): Object
 - [implicitDependencies](../../devkit/documents/ProjectConfiguration#implicitdependencies): string[]
 - [metadata](../../devkit/documents/ProjectConfiguration#metadata): ProjectMetadata
@@ -19,6 +20,14 @@ Project configuration
 - [targets](../../devkit/documents/ProjectConfiguration#targets): Object
 
 ## Properties
+
+### description
+
+• `Optional` **description**: `string`
+
+Project's description
+
+---
 
 ### generators
 

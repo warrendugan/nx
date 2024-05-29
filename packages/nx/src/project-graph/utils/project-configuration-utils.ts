@@ -114,6 +114,15 @@ export function mergeProjectConfigurationIntoRootMap(
     }
   }
 
+  if (project.description) {
+    updatedProjectConfiguration.description = [
+      project.description,
+      matchingProject.description,
+    ]
+      .filter(Boolean)
+      .join(' ');
+  }
+
   if (project.implicitDependencies) {
     updatedProjectConfiguration.implicitDependencies = (
       matchingProject.implicitDependencies ?? []
