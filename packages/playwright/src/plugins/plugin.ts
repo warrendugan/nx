@@ -163,7 +163,7 @@ async function buildPlaywrightTargets(
     playwrightConfig.testMatch ??= '**/*.@(spec|test).?(c|m)[jt]s?(x)';
 
     const dependsOn: TargetConfiguration['dependsOn'] = [];
-    forEachTestFile(
+    await forEachTestFile(
       (testFile) => {
         const relativeSpecFilePath = normalizePath(
           relative(projectRoot, testFile)
@@ -210,7 +210,7 @@ async function buildPlaywrightTargets(
   return { targets, metadata };
 }
 
-function forEachTestFile(
+async function forEachTestFile(
   cb: (path: string) => void,
   opts: {
     context: CreateNodesContext;
@@ -218,7 +218,7 @@ function forEachTestFile(
     config: PlaywrightTestConfig;
   }
 ) {
-  const files = getFilesInDirectoryUsingContext(
+  const files = await getFilesInDirectoryUsingContext(
     opts.context.workspaceRoot,
     opts.path
   );

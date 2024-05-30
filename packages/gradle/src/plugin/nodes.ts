@@ -72,7 +72,7 @@ export const createNodesV2: CreateNodesV2<GradlePluginOptions> = [
     );
     const targetsCache = readTargetsCache(cachePath);
 
-    populateGradleReport(context.workspaceRoot);
+    await populateGradleReport(context.workspaceRoot);
     const gradleReport = getCurrentGradleReport();
 
     try {
@@ -131,7 +131,7 @@ export const createNodes: CreateNodes<GradlePluginOptions> = [
     logger.warn(
       '`createNodes` is deprecated. Update your plugin to utilize createNodesV2 instead. In Nx 20, this will error.'
     );
-    populateGradleReport(context.workspaceRoot);
+    await populateGradleReport(context.workspaceRoot);
     const gradleReport = getCurrentGradleReport();
     const internalCreateNodes = makeCreateNodes(gradleReport, {});
     return await internalCreateNodes(configFile, options, context);

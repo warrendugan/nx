@@ -210,6 +210,7 @@ async function buildCypressTargets(
         ? cypressConfig.e2e.excludeSpecPattern.map((p) => join(projectRoot, p))
         : [join(projectRoot, cypressConfig.e2e.excludeSpecPattern)];
       const specFiles = await globWithWorkspaceContext(
+        context.workspaceRoot,
         specPatterns,
         excludeSpecPatterns
       );
