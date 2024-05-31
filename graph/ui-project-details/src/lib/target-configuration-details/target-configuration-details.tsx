@@ -1,14 +1,13 @@
 /* eslint-disable @nx/enforce-module-boundaries */
 // nx-ignore-next-line
 import type { TargetConfiguration } from '@nx/devkit';
-
 import { JsonCodeBlock } from '@nx/graph/ui-code-block';
+import { CopyToClipboardButton } from '@nx/graph/ui-components';
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { SourceInfo } from '../source-info/source-info';
 import { FadingCollapsible } from './fading-collapsible';
 import { TargetConfigurationProperty } from './target-configuration-property';
 import { selectSourceInfo } from './target-configuration-details.util';
-import { CopyToClipboard } from '../copy-to-clipboard/copy-to-clipboard';
 import { PropertyInfoTooltip, Tooltip } from '@nx/graph/ui-tooltips';
 import { TooltipTriggerText } from './tooltip-trigger-text';
 import { Pill } from '../pill';
@@ -47,10 +46,6 @@ export default function TargetConfigurationDetails({
   const isCompact = variant === 'compact';
   const [collapsed, setCollapsed] = useState(true);
   const { expandedTargets, toggleTarget } = useContext(ExpandedTargetsContext);
-
-  const handleCopyClick = async (copyText: string) => {
-    await window.navigator.clipboard.writeText(copyText);
-  };
 
   const handleCollapseToggle = useCallback(() => {
     if (toggleTarget) {
@@ -103,10 +98,7 @@ export default function TargetConfigurationDetails({
         <div className="p-4 text-base">
           <div className="group mb-4">
             <h4 className="mb-4">
-              <TargetExecutorTitle
-                {...displayHeader}
-                handleCopyClick={handleCopyClick}
-              />
+              <TargetExecutorTitle {...displayHeader} />
             </h4>
             <p className="pl-5 font-mono">
               <TargetExecutor {...displayHeader} link={link} />
@@ -116,10 +108,7 @@ export default function TargetConfigurationDetails({
           {script && (
             <div className="group mb-4">
               <h4 className="mb-4">
-                <TargetExecutorTitle
-                  script={script}
-                  handleCopyClick={handleCopyClick}
-                />
+                <TargetExecutorTitle script={script} />
               </h4>
               <p className="pl-5 font-mono">
                 <TargetExecutor script={script} link={link} />
@@ -139,14 +128,10 @@ export default function TargetConfigurationDetails({
                   </span>
                 </Tooltip>
                 <span className="mb-1 ml-2 hidden group-hover:inline">
-                  <CopyToClipboard
-                    onCopy={() =>
-                      handleCopyClick(
-                        `"inputs": ${JSON.stringify(
-                          targetConfiguration.inputs
-                        )}`
-                      )
-                    }
+                  <CopyToClipboardButton
+                    text={`"inputs": ${JSON.stringify(
+                      targetConfiguration.inputs
+                    )}`}
                   />
                 </span>
               </h4>
@@ -189,14 +174,10 @@ export default function TargetConfigurationDetails({
                   </span>
                 </Tooltip>
                 <span className="mb-1 ml-2 hidden group-hover:inline">
-                  <CopyToClipboard
-                    onCopy={() =>
-                      handleCopyClick(
-                        `"outputs": ${JSON.stringify(
-                          targetConfiguration.outputs
-                        )}`
-                      )
-                    }
+                  <CopyToClipboardButton
+                    text={`"outputs": ${JSON.stringify(
+                      targetConfiguration.outputs
+                    )}`}
                   />
                 </span>
               </h4>
@@ -239,14 +220,10 @@ export default function TargetConfigurationDetails({
                   </span>
                 </Tooltip>
                 <span className="inline pl-4 opacity-0 transition-opacity duration-150 ease-in-out group-hover/line:opacity-100">
-                  <CopyToClipboard
-                    onCopy={() =>
-                      handleCopyClick(
-                        `"dependsOn": ${JSON.stringify(
-                          targetConfiguration.dependsOn
-                        )}`
-                      )
-                    }
+                  <CopyToClipboardButton
+                    text={`"dependsOn": ${JSON.stringify(
+                      targetConfiguration.dependsOn
+                    )}`}
                   />
                 </span>
               </h4>
