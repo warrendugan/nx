@@ -5,6 +5,7 @@ import {
   type Tree,
 } from '@nx/devkit';
 import { moveBuildLibsFromSourceToViteConfig } from './build-post-target-transformer';
+import { getViteConfigPath } from '@nx/vite/src/generators/convert-to-inferred/lib/utils';
 
 export function servePostTargetTransformer(
   target: TargetConfiguration,
@@ -12,10 +13,7 @@ export function servePostTargetTransformer(
   projectDetails: { projectName: string; root: string },
   inferredTargetConfiguration: TargetConfiguration
 ) {
-  const viteConfigPath = [
-    joinPathFragments(projectDetails.root, `vite.config.ts`),
-    joinPathFragments(projectDetails.root, `vite.config.js`),
-  ].find((f) => tree.exists(f));
+  const viteConfigPath = getViteConfigPath(tree, projectDetails.root);
 
   if (target.options) {
     removePropertiesFromTargetOptions(
