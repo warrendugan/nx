@@ -34,7 +34,7 @@ type PostTargetTransformer = (
   tree: Tree,
   projectDetails: { projectName: string; root: string },
   inferredTargetConfiguration: TargetConfiguration
-) => TargetConfiguration;
+) => TargetConfiguration | Promise<TargetConfiguration>;
 type SkipTargetFilter = (
   targetConfiguration: TargetConfiguration
 ) => [boolean, string];
@@ -82,7 +82,7 @@ class ExecutorToPluginMigrator<T> {
     await this.#init();
     if (this.#targetAndProjectsToMigrate.size > 0) {
       for (const targetName of this.#targetAndProjectsToMigrate.keys()) {
-        this.#migrateTarget(targetName);
+        await this.#migrateTarget(targetName);
       }
       await this.#addPlugins();
     }
@@ -102,12 +102,12 @@ class ExecutorToPluginMigrator<T> {
     await this.#getCreateNodesResults();
   }
 
-  #migrateTarget(targetName: string) {
+  async #migrateTarget(targetName: string) {
     const include: string[] = [];
     for (const projectName of this.#targetAndProjectsToMigrate.get(
       targetName
     )) {
-      include.push(this.#migrateProject(projectName, targetName));
+      include.push(await this.#migrateProject(projectName, targetName));
     }
 
     this.#pluginToAddForTarget.set(targetName, {
@@ -117,7 +117,7 @@ class ExecutorToPluginMigrator<T> {
     });
   }
 
-  #migrateProject(projectName: string, targetName: string) {
+  async #migrateProject(projectName: string, targetName: string) {
     const projectFromGraph = this.#projectGraph.nodes[projectName];
     const projectConfig = readProjectConfiguration(this.tree, projectName);
 
@@ -138,7 +138,7 @@ class ExecutorToPluginMigrator<T> {
       this.#mergeInputs(projectTarget, createdTarget);
     }
 
-    projectTarget = this.#postTargetTransformer(
+    projectTarget = await this.#postTargetTransformer(
       projectTarget,
       this.tree,
       { projectName, root: projectFromGraph.data.root },
