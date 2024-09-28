@@ -411,7 +411,7 @@ async function determineStack(
         },
         {
           name: `angular`,
-          message: `Angular:       Configures a Angular application with modern tooling.`,
+          message: `Angular:       Configures an Angular application with modern tooling.`,
         },
         {
           name: `node`,
